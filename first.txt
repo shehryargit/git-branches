@@ -1,1 +1,70 @@
-This is my first file in main branch.
+This is my first file in main branch. This error occurs when you have a nested Git repository (also called a submodule) that hasn't been properly initialized. The folder farmfresh-backend/farmfresh-backend/ appears to be a Git repository inside your main repository.
+Quick Solutions:
+Option 1: Remove the nested .git folder (Simplest)
+bash# Navigate to the problematic directory
+cd "farmfresh-backend/farmfresh-backend/"
+
+# Remove the .git folder (this removes Git tracking from this subfolder)
+rm -rf .git
+
+# Go back to your main directory
+cd ../..
+
+# Now try adding files again
+git add .
+Option 2: Check what's in that directory
+bash# List all files including hidden ones
+ls -la "farmfresh-backend/farmfresh-backend/"
+
+# Or on Windows
+dir /a "farmfresh-backend/farmfresh-backend/"
+Option 3: If it's supposed to be a submodule
+bash# Add it as a proper submodule (if it has its own remote repository)
+git submodule add <repository-url> farmfresh-backend/farmfresh-backend/
+Option 4: Move files out and restructure
+bash# Create a temporary folder
+mkdir temp-backend
+
+# Move all files (except .git) from the nested folder
+cp -r "farmfresh-backend/farmfresh-backend/"* temp-backend/
+
+# Remove the problematic nested structure
+rm -rf "farmfresh-backend/farmfresh-backend/"
+
+# Move files to where you want them
+mv temp-backend/* farmfresh-backend/
+
+# Clean up
+rmdir temp-backend
+
+# Now try again
+git add .
+What Likely Happened:
+
+Extracted a zip file that contained a Git repository
+Cloned a repository inside another repository
+Copied files from another Git project
+
+To Prevent This:
+When extracting projects:
+bash# After extracting, check for nested .git folders
+find . -name ".git" -type d
+When copying code:
+
+Never copy .git folders unless you specifically need them
+Copy only the source files, not the entire repository
+
+Recommended Solution:
+I recommend Option 1 (removing the nested .git folder) unless you specifically need that subdirectory to be its own Git repository. Here's the step-by-step:
+bash# 1. Navigate to your main project folder
+cd "C:\Users\DELL\Music\fyp farmfresh\New folder (3) - Copy"
+
+# 2. Remove the nested .git folder
+rmdir /s "farmfresh-backend\farmfresh-backend\.git"
+
+# 3. Try adding files again
+git add .
+
+# 4. Commit your changes
+git commit -m "Add farmfresh backend files"
+Try Option 1 first - it's the most straightforward solution. Let me know what you find in that directory and I can provide more specific guidance!RetryClaude does not have the ability to run the code it generates yet.Claude can make mistakes. Please double-check responses.
